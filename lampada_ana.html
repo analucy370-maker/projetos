@@ -1,0 +1,92 @@
+<!-- 
+A prosposta do site é criar uma lâmpada que liga, desliga e pode quebrar.
+-->
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ana - Light Buld</title>
+    <link rel="shortcut icon" href="img/favicon (2).png" type="image/x-icon">
+    <!-- 
+    serve para estilizar a pag, forma local
+      -->
+    <style>
+      :root {
+        --ana: #ef93ef;
+        --enzo: #a2f8a2;
+        --ari: #5a5afd;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--ana);
+        background-image: linear-gradient(to top,
+         var(--enzo), var(--ari));
+        /* background-image:url("/img/img-fund.png") */
+        background-attachment: fixed;
+      }
+      header,
+      section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      button {
+        width: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Lâmpada</h1>
+    </header>
+    <section>
+      <div>
+        <img src="/img/lamp_off.jpeg" 
+        alt="Lâmpada OFF" id='lamp'>
+        <!-- 
+            toda imagem teem que ter um ponto antes da imagem, 
+            alt= alternativo(descrever a imagem)
+            -->
+      </div>
+
+      <div>
+        <button id='tunOn'>Ligar</button>
+        <button id='tunOff'>Desligar</button>
+      </div>
+    </section>
+  </body>
+  <script>
+    const tunOn = document.getElementById('turnOn');
+    const tunOff = document.getElementById('turnOff');
+    const lamp = document.getElementById('lamp');
+
+    function isLampBroken() {
+      return lamp.src.indexOf("quebrada") > -1;
+    }
+    function lampOn() {
+      if (!isLampBroken()) {
+        img.src = './img/lamp_on.jpeg';
+      }
+    }
+    function lampOff() {
+      if (!isLampBroken()) {
+        img.src = './img/lamp_off.jpeg';
+      }
+    }
+    function lampBroken() {
+      img.src = './img/lamp_broke.jpeg';
+    }
+
+     turnOn.addEventListener('click', lampOn);
+    turnOff.addEventListener('click', lampOff);
+    lamp.addEventListener('mouseover', lampOn);
+    lamp.addEventListener('mouseleave', lampOff);
+    lamp.addEventListener('dblclick', lampBroken);
+
+  </script>
+</html>

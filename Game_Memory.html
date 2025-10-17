@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day_Night</title>
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon" />
+    <style>
+      :root {
+        --fundo-claro: #fff;
+        --fundo-escuro: #000;
+        --botao-primario: #7d1ad4;
+        --botao-primario-hover: #6e17b9;
+        --texto-claro: #000;
+        /*adicionar esta variavel para o texto no tema claro*/
+        --texto-escuro: #fff;
+        /*adicionar esta variavel para o tema escuro*/
+      }
+      [data-theme="dark"] {
+        --fundo-claro: #000;
+        --fundo-escuro: #fff;
+        --texto-claro: #fff;
+        --texto-escuro: #000;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: var(--fundo-claro);
+        color: var(--texto-claro);
+        /*adicionar esta linha*/
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      div {
+        background-color: var(--fundo-escuro);
+        color: var(--texto-escuro);
+        /*adicionar esta linha*/
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+        padding: 2rem;
+        border: 0.09rem;
+      }
+      button {
+        background-color: var(--botao-primario);
+        color: var(--texto-escuro);
+        /*adicionar texto do botão mude*/
+        padding: 0.4rem;
+        border: none;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        cursor: pointer;
+        display: flex;
+        /*para centralizar o icone*/
+        align-items: center;
+        justify-content: center;
+      }
+      button:hover {
+        background-color: var(--botao-primario-hover);
+        transition: 0.8s;
+      }
+      /* sera acrescentado tratamento para os ícone*/
+
+      .material-symbols-rounded {
+        font-feature-settings: 
+        'FILL' 0,
+        'wght'400,
+        'GRAD'0,
+        'opsz'48;
+        font-size: 34px;
+        /*ajuste o tamanho do íccone*/
+        color: var(--texto-claro);
+        /*cor inicial do ícone*/
+      }
+      [data-theme="dark"] .material-symbols-rounded {
+        color: var(--texto-escuro);
+        /*cor do ícone no tema*/
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>Dia de Deploy</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, corporis!
+        Minima ab iusto non at suscipit voluptas reiciendis sunt ullam, in cum
+        dicta recusandae cumque quibusdam, officia nam, totam consequatur.
+      </p>
+      <button id="btn-dark-mode"></button>
+    </div>
+  </body>
+  <script>
+    //'const'é usado para variaveis que não serão retribuidas apóos a inicialização.
+    //'btnDarkMode'armazena a referencia ao elemennto HTML do botão com o ID 'btn-dark-mode'.
+    const btnDarkMode = document.getElementById('btn-dark-mode');
+
+    //'themeSystem' obtém o valor da chave 'themeSystem'do 'localStrorage'.
+    //Se não existir nenhum valor para essa chave, o valor padrão 'light' é atribuido.
+    const themeSystem = localStorage.getItem('themeSystem') || 'light';
+    //adicionar um 'event listener'ao botão para o evento 'click'.
+    //quando o botão clicado, a função dentro das chaves '{}' será executada.
+    btnDarkMode.addEventListener('click', () => {
+      let oldTheme = localStorage.getItem('themeSystem') || 'light';
+      let newTheme = oldTheme === "light" ? "dark" : 'light';
+      //Salva o novo tema no 'localStoroge' com a chave 'themeSystem'.
+      localStorage.setItem('themeSystem', newTheme);
+      //Chama a função 'defineCurrentTheme' para aplicar o novo tema visualmente.
+      defineCurrentTheme(newTheme);
+    });
+    //função que recebe um 'theme' como argumento e aplica esse tema a página.
+    function defineCurrentTheme(theme) {
+      //define os nomes dos ícones do google material symbols rounded para cada tema.
+      //ícone de sol para o modo escuro
+      const darkIcon =
+        '<span class="material-symbols-rounded">light_mode</span>';
+      //ícone de lua para o modo claro
+      const lightIcon =
+        '<span class="material-symbols-rounded">dark_mode</span>';
+      //define o atributo 'data-theme' noelemento 'html'com o valor do tema atual.
+      //isso permite que as regras CSS com '[data-theme="..."]' sejam aplicadas.
+      document.documentElement.setAttribute("data-theme", theme);
+      //verificar se o tema atual é 'light'.
+      if (theme === "light") {
+        //se for 'light', define o conteúdo interno do botão com o ícone de sol.
+        btnDarkMode.innerHTML = darkIcon;
+        return; //sai da função após definir o ícone.
+      }
+      btnDarkMode.innerHTML = lightIcon;
+    }
+    defineCurrentTheme(themeSystem);
+  </script>
+</html>
